@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <script src="https://cdn.tailwindcss.com"></script>
+   <title>To Do</title>
+</head>
+<body>
+   <div class="flex  flex-row justify-center items-center h-[100vh] w-[100vw] bg-gray-400 overflow-y-scroll">
+      <div class="flex  flex-col pt-[25px] items-center border-2 border-gray-800 h-[550px] w-[450px] gap-[10px] rounded-lg bg-gray-200 shadow-2xl overflow-y-scroll">
+         <div class="flex  flex-row gap-[10px] justify-center items-center">
+            <textarea type="text" id="Item" placeholder="SELECT To Do list" class="border-2 border-gray-700 rounded pb-[2px] pl-[8px]  shadow w-[250px]  text-[23px] resize-none overflow-y-scroll scrollbar-w-none" rows="2" cols="15"></textarea>
+            <button class="border-2 border-gray-600 rounded h-[35px] p-[4px] pt-[0px] text-[22px] shadow-lg" id="Add"> Add</button>
+         </div>
+         <div id="list" class="flex  flex-col-reverse justify-center items-center gap-[8px]">
+         </div>
+      </div>
+   </div>
+   <script>
+      let Item = document.getElementById("Item");
+      let Add = document.getElementById("Add");
+      let list = document.getElementById("list");
+      let finish = document.getElementsByClassName("container");
+      let button = document.getElementsByClassName("button")
+      let temp;
+      let inText;
+
+      function addBlock(Event) {
+      //   console.log(Event.target.parentElement); 
+       if (Event.target.innerText =="Done") {
+         Editdone()
+         return
+       }
+       if (Item.value == null|| Item.value == ""|| Item.value == undefined ) {
+         return;
+        
+       }else {
+         let container = document.createElement("div")
+         container.className ="flex  flex-row justify-center items-center gap-[5px] ml-[15px] mr-[15px] container"
+
+         let div = document.createElement("span")
+          div.className ="border-2 border-gray-500 rounded p-[3px] pl-[8px] pr-[8px] shadow w-[250px] justify-center items-center text-[21px]  overflow-y-scroll";
+          div.innerText = Item.value;
+          container.append(div)
+
+          let button = document.createElement("button")
+         button.innerText="Del"
+         // button.id="button"
+         button.className ="border-2 border-gray-400 rounded pl-[8px] pr-[8px] pb-[2px] shadow h-[36px] text-[18px]  bg-red-400 font-medium delete "
+         container.append(button) ;
+
+         let edit = document.createElement("button")
+         edit.innerText="Edit"
+         // button.id="button"
+         edit.className ="border border-black rounded p-[2px] pl-[8px] pr-[8px] pb-[4px] shadow h-[36px] text-[18px] bg-blue-400 font-medium edit"
+         container.append(edit) ;
+         
+         list.append(container)
+         Item.value=""
+       }
+      }
+
+     function Editdone() {
+            temp[0].innerText = Item.value
+            inText.innerText = "Edit"
+            Add.innerText ="Add"
+            Item.value=""
+            inText.style.border ="none";
+            return
+     }
+
+      function Btn(Event) {
+
+         inText = Event.target;
+         temp = inText.parentElement.getElementsByClassName("box");
+         // console.log( temp[0].innerText);
+
+         if (inText.innerText == "Del") {
+            Event.target.parentElement.remove()
+         }else if (inText.innerText == "Edit") {
+            Item.value = temp[0].innerText
+            inText.innerText = "Done"
+            inText.style.border = "2px solid blue"
+            Add.innerText ="Done"
+            
+         }else if (inText.innerText == "Done") {
+            Editdone()
+         }
+      }
+
+      
+      Add.addEventListener("click", addBlock);
+      // btn.addEventListener("click", rBtn);
+      list.addEventListener("click", Btn);
+
+   </script>
+</body>
+</html>
